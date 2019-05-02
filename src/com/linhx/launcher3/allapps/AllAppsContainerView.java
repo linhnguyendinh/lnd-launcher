@@ -127,7 +127,7 @@ public class AllAppsContainerView extends SpringRelativeLayout implements DragSo
     @Override
     protected void setDampedScrollShift(float shift) {
         // Bound the shift amount to avoid content from drawing on top (Y-val) of the QSB.
-        float maxShift = getSearchView().getHeight() / 2f;
+        float maxShift =  0; //getSearchView().getHeight() / 2f;
         super.setDampedScrollShift(Utilities.boundToRange(shift, -maxShift, maxShift));
     }
 
@@ -162,9 +162,9 @@ public class AllAppsContainerView extends SpringRelativeLayout implements DragSo
     public boolean shouldContainerScroll(MotionEvent ev) {
         // IF the MotionEvent is inside the search box, and the container keeps on receiving
         // touch input, container should move down.
-        if (mLauncher.getDragLayer().isEventOverView(mSearchContainer, ev)) {
-            return true;
-        }
+//        if (mLauncher.getDragLayer().isEventOverView(mSearchContainer, ev)) {
+//            return true;
+//        }
         AllAppsRecyclerView rv = getActiveRecyclerView();
         if (rv == null) {
             return true;
@@ -234,7 +234,7 @@ public class AllAppsContainerView extends SpringRelativeLayout implements DragSo
             mHeader.reset(animate);
         }
         // Reset the search bar and base recycler view after transitioning home
-        mSearchUiManager.resetSearch();
+        // mSearchUiManager.resetSearch();
     }
 
     @Override
@@ -251,21 +251,21 @@ public class AllAppsContainerView extends SpringRelativeLayout implements DragSo
 
         mHeader = findViewById(R.id.all_apps_header);
         rebindAdapters(mUsingTabs, true /* force */);
-
-        mSearchContainer = findViewById(R.id.search_container_all_apps);
-        mSearchUiManager = (SearchUiManager) mSearchContainer;
-        mSearchUiManager.initialize(this);
+//
+//        mSearchContainer = findViewById(R.id.search_container_all_apps);
+//        mSearchUiManager = (SearchUiManager) mSearchContainer;
+//        mSearchUiManager.initialize(this);
     }
 
     public SearchUiManager getSearchUiManager() {
         return mSearchUiManager;
     }
 
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        mSearchUiManager.preDispatchKeyEvent(event);
-        return super.dispatchKeyEvent(event);
-    }
+//    @Override
+//    public boolean dispatchKeyEvent(KeyEvent event) {
+//        mSearchUiManager.preDispatchKeyEvent(event);
+//        return super.dispatchKeyEvent(event);
+//    }
 
     @Override
     public void onDropCompleted(View target, DragObject d, boolean success) { }
@@ -390,9 +390,9 @@ public class AllAppsContainerView extends SpringRelativeLayout implements DragSo
         return mHeader;
     }
 
-    public View getSearchView() {
-        return mSearchContainer;
-    }
+//    public View getSearchView() {
+////        return mSearchContainer;
+////    }
 
     public View getContentView() {
         return mViewPager == null ? getActiveRecyclerView() : mViewPager;
@@ -472,15 +472,15 @@ public class AllAppsContainerView extends SpringRelativeLayout implements DragSo
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 if (shouldSpring
                         && valueAnimator.getAnimatedFraction() >= FLING_ANIMATION_THRESHOLD) {
-                    int searchViewId = getSearchView().getId();
-                    addSpringView(searchViewId);
+//                    int searchViewId = getSearchView().getId();
+//                    addSpringView(searchViewId);
 
                     finishWithShiftAndVelocity(1, velocity * FLING_VELOCITY_MULTIPLIER,
                             new DynamicAnimation.OnAnimationEndListener() {
                                 @Override
                                 public void onAnimationEnd(DynamicAnimation animation,
                                         boolean canceled, float value, float velocity) {
-                                    removeSpringView(searchViewId);
+                                    //removeSpringView(searchViewId);
                                 }
                             });
 

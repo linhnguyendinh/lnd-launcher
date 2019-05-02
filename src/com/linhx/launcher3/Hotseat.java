@@ -19,6 +19,7 @@ package com.linhx.launcher3;
 import static com.linhx.launcher3.LauncherState.ALL_APPS;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -56,7 +57,19 @@ public class Hotseat extends FrameLayout implements LogContainerProvider, Insett
 
     public Hotseat(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+//        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) this.getLayoutParams();
+//        params.setMargins(0, 0, 0, this.getMarginBottom(context));
+//        this.setLayoutParams(params);
         mLauncher = Launcher.getLauncher(context);
+    }
+
+    private Integer getMarginBottom (Context context) {
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            return resources.getDimensionPixelSize(resourceId);
+        }
+        return 0;
     }
 
     public CellLayout getLayout() {
@@ -168,7 +181,7 @@ public class Hotseat extends FrameLayout implements LogContainerProvider, Insett
             lp.height = grid.hotseatBarSizePx + insets.bottom;
         }
         Rect padding = grid.getHotseatLayoutPadding();
-        getLayout().setPadding(padding.left, padding.top, padding.right, padding.bottom);
+        getLayout().setPadding(padding.left, 0, padding.right, 0);
 
         setLayoutParams(lp);
         InsettableFrameLayout.dispatchInsets(this, insets);
